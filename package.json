@@ -1,0 +1,16 @@
+{
+  "name": "semantic-release-slack-with-files",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "@slack/web-api": "^7.8.0"
+  }
+}
