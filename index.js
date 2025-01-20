@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   async success(pluginConfig, context) {
-    const { nextRelease, commits, logger } = context;
+    const { nextRelease, commits, branch, logger } = context;
     const slackToken = process.env.SLACK_TOKEN;
     const slackChannel = process.env.SLACK_CHANNEL;
 
@@ -14,10 +14,12 @@ module.exports = {
 
     const slackClient = new WebClient(slackToken);
     const assets = pluginConfig.assets || {};
-    const includeChangelog = pluginConfig.changelog ?? false;
-    const includeLastCommitText = pluginConfig.lastCommitText ?? false;
-    const lastLine = pluginConfig.lastLine || '';  // New config for the last line
-    const rawMessageTemplate = pluginConfig.message || `New release: ${nextRelease.version}`;
+    const isPrerelease = branch.prerelease || false;
+    const prereleaseConfig = pluginConfig.prerelease || {};
+    const includeChangelog = isPrerelease ? prereleaseConfig.changelog ?? false : pluginConfig.changelog ?? false;
+    const includeLastCommitText = isPrerelease ? prereleaseConfig.lastCommitText ?? false : pluginConfig.lastCommitText ?? false;
+    const lastLine = isPrerelease ? prereleaseConfig.lastLine || '' : pluginConfig.lastLine || '';
+    const rawMessageTemplate = isPrerelease ? prereleaseConfig.message || `Prerelease: ${nextRelease.version}` : pluginConfig.message || `New release: ${nextRelease.version}`;
 
     let downloadLinks = [];
 
