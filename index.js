@@ -17,10 +17,17 @@ module.exports = {
     const rawAssets = pluginConfig.assets || {};
     const isPrerelease = branch.prerelease || false;
     const prereleaseConfig = pluginConfig.prerelease || {};
+    const prereleaseEnabled = prereleaseConfig.enabled ?? false;
     const includeChangelog = isPrerelease ? prereleaseConfig.changelog ?? false : pluginConfig.changelog ?? false;
     const includeLastCommitText = isPrerelease ? prereleaseConfig.lastCommitText ?? false : pluginConfig.lastCommitText ?? false;
     const lastLine = isPrerelease ? prereleaseConfig.lastLine || '' : pluginConfig.lastLine || '';
     const rawMessageTemplate = isPrerelease ? prereleaseConfig.message || `Prerelease: ${nextRelease.version}` : pluginConfig.message || `New release: ${nextRelease.version}`;
+
+    // if prerelease.enabled is false and the branch is a prerelease, skip the release
+    if (!prereleaseEnabled && isPrerelease) {
+      logger.log(`Skipping release for prerelease branch: ${branch.name}`);
+      return;
+    }
 
     let downloadLinks = [];
     let initialMessage;

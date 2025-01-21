@@ -43,6 +43,7 @@ Add the plugin to your `.releaserc.json` or `.releaserc.js` file. Below is an ex
         "message": "We are excited about our new release of `myfancytool` ${nextRelease.version} 🎉🎉🎉\n\n",
         "lastLine": "_Thank you for your continued support!_ 🙌",
         "prerelease": {
+          "enabled": true,
           "changelog": false,
           "lastCommitText": true,
           "message": "🚀 Prerelease: `myfancytool` ${nextRelease.version} 🚧\n\n",
@@ -74,6 +75,7 @@ Add the plugin to your `.releaserc.json` or `.releaserc.js` file. Below is an ex
 
 - **`prerelease`** (object):
   - Contains overrides for prerelease branches:
+    - **`enabled`** (boolean): Enable/disable the notification for prerelease branches.
     - **`changelog`** (boolean): Include changelog in prerelease messages.
     - **`lastCommitText`** (boolean): Include the last commit text in prerelease messages.
     - **`message`** (string): Custom prerelease message.
@@ -116,6 +118,7 @@ Prerelease branches (e.g., `beta`) can have their own configuration:
 ```json
 {
   "prerelease": {
+    "enabled": true,
     "changelog": false,
     "lastCommitText": true,
     "message": "🚀 Prerelease: `myfancytool` ${nextRelease.version} 🚧\n\n",
